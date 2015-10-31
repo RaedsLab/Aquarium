@@ -50,16 +50,24 @@ namespace WComp.Beans
 		}
 		//SunLight
 		
-		//Result
-		private string result;
+		//output
+		private string brightnessLevel;
+		private string sunOrMoon;
 		
-		public string Result {
+		public string BrightnessLevel {
 			get {
-				FireEvent(result);
-				return result; 
+				FireBrightnessLevelEvent(brightnessLevel);
+				return brightnessLevel; 
 			}
 		}
-		//Result
+		
+		public string SunOrMoon {
+			get {
+				FireSunOrMoonEvent(sunOrMoon);
+				return sunOrMoon; 
+			}
+		}
+		//output
 
 		private void Choose()
         {
@@ -81,11 +89,13 @@ namespace WComp.Beans
                 {
                     val = 100 - (val - 100);
                 }
-                result = val.ToString();
+                brightnessLevel = val.ToString();
+                sunOrMoon = "Sun";
             }
             else
             {
-            	result = moonBrightness.ToString();
+            	brightnessLevel = moonBrightness.ToString();
+            	sunOrMoon = "Moon";
             }
         }
 
@@ -93,15 +103,22 @@ namespace WComp.Beans
 		public event StringValueEventHandler SunsetValueChanged;
 		public event StringValueEventHandler SunriseValueChanged;
 		public event StringValueEventHandler SolarNoonValueChanged;
-		public event StringValueEventHandler GetResultEvent;
+		public event StringValueEventHandler GetBrightnessLevelEvent;
+		public event StringValueEventHandler GetSunOrMoonEvent;
 		
 		public delegate void IntValueEventHandler(int val);
 		public event IntValueEventHandler MoonBrightnessValueChanged;
 		
-		private void FireEvent(string s) {
-			if(GetResultEvent != null) {
+		private void FireBrightnessLevelEvent(string s) {
+			if(GetBrightnessLevelEvent != null) {
 				Choose();
-				GetResultEvent(s);
+				GetBrightnessLevelEvent(s);
+			}
+		}
+		
+		private void FireSunOrMoonEvent(string s) {
+			if(GetSunOrMoonEvent != null) {
+				GetSunOrMoonEvent(s);
 			}
 		}
 		
